@@ -58,6 +58,13 @@ Use this skill to reliably execute follow-up work on an existing PR without crea
 - Type/lint/test failures: run the same command locally, patch smallest root cause, rerun.
 - If CI and local differ, check Node/npm versions and workflow environment assumptions.
 
+## PR Description Format
+
+- Follow `pr-description-template.md` in this skill folder when creating or updating PR descriptions.
+- Use the **New feature** format for feature work.
+- Use the **Bug fix** format for bug work.
+- Keep the **Testing** block brief: summarize test types and covered behavior, not full logs.
+
 ## Guardrails
 
 - Stay on the same branch for the same active PR.
