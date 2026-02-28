@@ -19,13 +19,18 @@ Use this skill to reliably execute follow-up work on an existing PR without crea
 6. Add or update lean tests for changed behavior.
 7. Run targeted checks locally first, then broader checks as needed.
 8. Commit with a plain human message and push.
-9. Reply on addressed review comments with minimal wording (`fixed` / `done`).
-10. Summarize what changed, what was tested, and any remaining risk.
+9. If publishing PR work, explicitly create the PR (do not stop at the suggested URL output).
+10. Verify the PR exists by checking the returned PR URL/number (or `gh pr view`).
+11. Reply on addressed review comments with minimal wording (`fixed` / `done`).
+12. Summarize what changed, what was tested, and any remaining risk.
 
 ## Command Patterns
 
 ```bash
 # PR + checks
+ gh pr create --base <base-branch> --head <branch> --title "<title>" --body "<body>"
+ gh pr view --repo <owner/repo> --json number,url,state
+
  gh pr checks <pr-number> --repo <owner/repo>
  gh run list --repo <owner/repo> --branch <branch> --limit 10
  gh run view <run-id> --repo <owner/repo> --log-failed
