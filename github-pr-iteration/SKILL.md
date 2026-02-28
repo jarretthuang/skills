@@ -1,32 +1,36 @@
 ---
 name: github-pr-iteration
-description: Handle GitHub PR iteration loops using the gh CLI. Use when asked to address review comments, fix CI on an existing PR, apply requested changes on the same branch, push follow-up commits, or close out review threads with minimal replies.
+description: Handle GitHub PR workflows using the gh CLI for both new PR creation and existing PR iteration. Use when asked to open a PR, address review comments, fix CI, apply requested changes on the same branch, push follow-up commits, or close out review threads with minimal replies.
 ---
 
 # GitHub PR Iteration
 
 ## Overview
 
-Use this skill to reliably execute follow-up work on an existing PR without creating branch/PR churn. Keep changes focused, test-backed, and easy to review.
+Use this skill to reliably run both PR creation and follow-up iteration without branch/PR churn. Keep changes focused, test-backed, and easy to review.
 
 ## Workflow
 
-1. Identify the active PR and current branch.
+1. Identify whether this is **new PR creation** or **existing PR iteration**.
 2. Pull latest remote changes first (`git fetch`, `git pull --rebase` when needed).
-3. Collect latest review comments and CI failures.
+3. Collect context:
+   - new PR: summarize scope and prepare description
+   - existing PR: collect latest review comments and CI failures
 4. Critically validate comments before changing code (especially bot/AI comments).
 5. Implement only applicable fixes on the same branch.
 6. Add or update lean tests for changed behavior.
 7. Run targeted checks locally first, then broader checks as needed.
 8. Commit with a plain human message and push.
-9. Verify updates landed on the active PR (`gh pr view` / checks).
-10. Reply on addressed review comments with minimal wording (`fixed` / `done`).
-11. Summarize what changed, what was tested, and any remaining risk.
+9. If this is a new PR, run `gh pr create` and verify the returned PR URL/number.
+10. If this is an existing PR, verify updates landed on the active PR (`gh pr view` / checks).
+11. Reply on addressed review comments with minimal wording (`fixed` / `done`).
+12. Summarize what changed, what was tested, and any remaining risk.
 
 ## Command Patterns
 
 ```bash
-# PR + checks
+# PR creation + checks
+ gh pr create --base <base-branch> --head <branch> --title "<title>" --body "<body>"
  gh pr view --repo <owner/repo> --json number,url,state
  gh pr checks <pr-number> --repo <owner/repo>
  gh run list --repo <owner/repo> --branch <branch> --limit 10
@@ -64,8 +68,8 @@ Use this skill to reliably execute follow-up work on an existing PR without crea
 
 ## Guardrails
 
-- Stay on the same branch for the same active PR.
-- Do not create a new PR for follow-up iteration.
+- For existing PR iteration, stay on the same branch and same PR.
+- Create a new PR only when the task is explicitly new PR work (not follow-up on an active PR).
 - Do not commit planning/design markdown files unless explicitly requested.
 - Prefer minimal diffs that directly resolve comments or failures.
 - Always report what was run locally before pushing.
