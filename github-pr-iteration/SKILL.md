@@ -69,6 +69,7 @@ Use this skill to reliably run both PR creation and follow-up iteration without 
 ## Guardrails
 
 - For existing PR iteration, stay on the same branch and same PR.
+- If that PR is already merged, do not keep pushing to the old PR branch; create a new branch and open a new PR for follow-up work.
 - Create a new PR only when the task is explicitly new PR work (not follow-up on an active PR).
 - Do not commit planning/design markdown files unless explicitly requested.
 - Prefer minimal diffs that directly resolve comments or failures.
