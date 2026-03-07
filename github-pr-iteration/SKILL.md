@@ -23,8 +23,9 @@ Use this skill to reliably run both PR creation and follow-up iteration without 
 8. Commit with a plain human message and push.
 9. If this is a new PR, run `gh pr create` and verify the returned PR URL/number.
 10. If this is an existing PR, verify updates landed on the active PR (`gh pr view` / checks).
-11. Reply on addressed review comments with minimal wording (`fixed` / `done`).
-12. Summarize what changed, what was tested, and any remaining risk.
+11. If new commits changed scope/behavior, update the PR description so it reflects the latest state before/after pushing.
+12. Reply on addressed review comments with minimal wording (`fixed` / `done`).
+13. Summarize what changed, what was tested, and any remaining risk.
 
 ## Command Patterns
 
@@ -69,6 +70,7 @@ Use this skill to reliably run both PR creation and follow-up iteration without 
 ## Guardrails
 
 - For existing PR iteration, stay on the same branch and same PR.
+- Keep PR descriptions up-to-date during iteration (especially after new commits that alter scope, behavior, tests, or risk).
 - If that PR is already merged, do not keep pushing to the old PR branch; create a new branch and open a new PR for follow-up work.
 - Create a new PR only when the task is explicitly new PR work (not follow-up on an active PR).
 - Do not commit planning/design markdown files unless explicitly requested.
