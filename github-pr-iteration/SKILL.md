@@ -72,6 +72,7 @@ For solution design and implementation quality, pair this with the `coding-princ
 ## Guardrails
 
 - For existing PR iteration, stay on the same branch and same PR.
+- PR base default: target the repository’s active default base branch (for example `main`, `master`, or equivalent) when creating PRs; do not target another feature/fix branch unless the user explicitly requests stacked PRs.
 - Keep PR descriptions up-to-date during iteration (especially after new commits that alter scope, behavior, tests, or risk).
 - If that PR is already merged, do not keep pushing to the old PR branch; create a new branch and open a new PR for follow-up work.
 - Create a new PR only when the task is explicitly new PR work (not follow-up on an active PR).
