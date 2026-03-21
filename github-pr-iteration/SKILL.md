@@ -13,7 +13,7 @@ For solution design and implementation quality, pair this with the `coding-princ
 
 ## Workflow
 
-1. Identify the target PR explicitly before checking state. Prefer a concrete selector such as PR number, PR URL, head branch, or issue linkage; do not rely on bare `gh pr view` / `gh pr list` from whatever branch happens to be checked out. Then verify whether that specific PR is still **open**.
+1. Identify the target PR explicitly before checking state. Prefer a PR number or PR URL when available. Use head branch and issue linkage only as fallback hints to find the right PR, not as equally reliable selectors. Do not rely on bare `gh pr view` / `gh pr list` from whatever branch happens to be checked out. Then verify whether that specific PR is still **open**.
 2. Check issue state too: for GitHub iteration work, prefer working from a GitHub issue unless the user, repo workflow, or task context makes that unnecessary (for example, "quick fix, don't need an issue number", issues are disabled, or the team uses PR-only/external-ticket workflows). If an active issue does not exist and creating one fits the repo workflow, create one with a reasonable summary and a concise bullet-list description.
 3. Identify whether this is **new PR creation** or **existing PR iteration**.
 4. Pull latest remote changes first (`git fetch`, `git pull --rebase` when needed).
@@ -37,7 +37,7 @@ For solution design and implementation quality, pair this with the `coding-princ
 # PR creation + checks
  gh pr create --base <base-branch> --head <branch> --title "<title>" --body "<body>"
  gh pr view <pr-number|url|branch> --repo <owner/repo> --json number,url,state
- gh pr list --repo <owner/repo> --head <branch> --state open --json number,url,state
+ gh pr list --repo <owner/repo> --head <branch> --state open --json number,url,state   # fallback when PR number/URL is not available and branch context is unambiguous
  gh pr checks <pr-number> --repo <owner/repo>
  gh run list --repo <owner/repo> --branch <branch> --limit 10
  gh run view <run-id> --repo <owner/repo> --log-failed
