@@ -14,9 +14,10 @@ For solution design and implementation quality, pair this with the `coding-princ
 ## Workflow
 
 1. Check PR state first: verify whether there is an existing **open** PR for this work (`gh pr view` / `gh pr list`). Do not assume a branch is still tied to an active PR just because it existed before.
-2. Identify whether this is **new PR creation** or **existing PR iteration**.
-3. Pull latest remote changes first (`git fetch`, `git pull --rebase` when needed).
-4. Collect context:
+2. Check issue state too: for GitHub iteration work, default to working from a GitHub issue unless the user explicitly says not to (for example, "quick fix, don't need an issue number"). If there is no active issue yet, create one with a reasonable summary and a concise bullet-list description before continuing.
+3. Identify whether this is **new PR creation** or **existing PR iteration**.
+4. Pull latest remote changes first (`git fetch`, `git pull --rebase` when needed).
+5. Collect context:
    - new PR: summarize scope and prepare description
    - existing PR: collect latest review comments and CI failures
 4. Critically validate comments before changing code (especially bot/AI comments).
@@ -72,6 +73,8 @@ For solution design and implementation quality, pair this with the `coding-princ
 
 ## Guardrails
 
+- For GitHub iteration work, prefer having an active issue number tied to the work unless the user explicitly waives that requirement.
+- If an active issue does not exist yet, create one first with a concise summary and bullet-list description.
 - For existing PR iteration, stay on the same branch and same PR only while that PR is still open.
 - PR base default: target the repository’s active default base branch (e.g., `main`, `master`, or equivalent) when creating PRs; do not target another feature/fix branch unless the user explicitly requests stacked PRs.
 - Keep PR descriptions up-to-date during iteration (especially after new commits that alter scope, behavior, tests, or risk).
