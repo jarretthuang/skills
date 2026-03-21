@@ -9,13 +9,12 @@ description: Handle GitHub PR workflows using the gh CLI for both new PR creatio
 
 Use this skill to reliably run both PR creation and follow-up iteration without branch/PR churn. Keep changes focused, test-backed, and easy to review.
 
-For solution design and implementation quality, pair this with the `coding-principles` skill.
-
 ## Workflow
 
-1. Identify whether this is **new PR creation** or **existing PR iteration**.
-2. Pull latest remote changes first (`git fetch`, `git pull --rebase` when needed).
-3. Collect context:
+1. Check PR state first: verify whether there is an existing **open** PR for this work (`gh pr view` / `gh pr list`). Do not assume a branch is still tied to an active PR just because it existed before.
+2. Identify whether this is **new PR creation** or **existing PR iteration**.
+3. Pull latest remote changes first (`git fetch`, `git pull --rebase` when needed).
+4. Collect context:
    - new PR: summarize scope and prepare description
    - existing PR: collect latest review comments and CI failures
 4. Critically validate comments before changing code (especially bot/AI comments).
@@ -71,10 +70,11 @@ For solution design and implementation quality, pair this with the `coding-princ
 
 ## Guardrails
 
-- For existing PR iteration, stay on the same branch and same PR.
-- PR base default: target the repository’s active default base branch (for example `main`, `master`, or equivalent) when creating PRs; do not target another feature/fix branch unless the user explicitly requests stacked PRs.
+- For existing PR iteration, stay on the same branch and same PR only while that PR is still open.
+- PR base default: target the repository’s active default base branch (e.g., `main`, `master`, or equivalent) when creating PRs; do not target another feature/fix branch unless the user explicitly requests stacked PRs.
 - Keep PR descriptions up-to-date during iteration (especially after new commits that alter scope, behavior, tests, or risk).
-- If that PR is already merged, do not keep pushing to the old PR branch; create a new branch and open a new PR for follow-up work.
+- If that PR is already merged or closed, do not keep pushing to the old PR branch. Start from the current base branch, create a new branch, and open a new PR for follow-up work.
+- Before pushing follow-up commits or sending a PR link to the user, re-check that the PR is still open and is the correct review target.
 - Create a new PR only when the task is explicitly new PR work (not follow-up on an active PR).
 - Do not commit planning/design markdown files unless explicitly requested.
 - Prefer minimal diffs that directly resolve comments or failures.
