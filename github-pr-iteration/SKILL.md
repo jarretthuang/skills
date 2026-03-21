@@ -14,7 +14,7 @@ For solution design and implementation quality, pair this with the `coding-princ
 ## Workflow
 
 1. Identify whether this is **new PR creation** or **existing PR iteration**.
-2. If this is iteration work, identify the target PR explicitly before checking state. Prefer a PR number or PR URL when available. Use head branch and issue linkage only as fallback hints to find the right PR, not as equally reliable selectors. Do not rely on bare `gh pr view` / `gh pr list` from whatever branch happens to be checked out. Then verify whether that specific PR is still **open**.
+2. If this is iteration work, identify the target PR explicitly before checking state. Prefer a PR number or PR URL when available. Use head branch and issue linkage only as fallback hints to find the right PR, not as equally reliable selectors. Do not rely on bare `gh pr view` / `gh pr list` to discover the target from whatever branch happens to be checked out. After the target branch or PR context is verified, bare `gh pr view` is fine.
 3. Check issue state too: for GitHub iteration work, prefer working from a GitHub issue unless the user, repo workflow, or task context makes that unnecessary (for example, "quick fix, don't need an issue number", issues are disabled, or the team uses PR-only/external-ticket workflows). If an active issue does not exist and creating one fits the repo workflow, create one with a reasonable summary and a concise bullet-list description.
 4. Pull latest remote changes first (`git fetch`, `git pull --rebase` when needed).
 5. Collect context:
@@ -37,6 +37,7 @@ For solution design and implementation quality, pair this with the `coding-princ
 # PR creation + checks
  gh pr create --base <base-branch> --head <branch> --title "<title>" --body "<body>"
  gh pr view <pr-number|url|branch> --repo <owner/repo> --json number,url,state
+ gh pr view --repo <owner/repo> --json number,url,state                              # okay after the target branch/PR context is already verified
  gh pr list --repo <owner/repo> --head <branch> --state open --json number,url,state   # fallback when PR number/URL is not available and branch context is unambiguous
  gh pr checks <pr-number> --repo <owner/repo>
  gh run list --repo <owner/repo> --branch <branch> --limit 10
