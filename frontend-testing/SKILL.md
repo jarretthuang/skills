@@ -65,11 +65,12 @@ For approximate features like read-time, truncation, ranking, or fuzzy formattin
 
 ## Workflow
 
-1. Identify the behavior or invariant
-2. Choose the lightest useful test level
-3. Add one or two focused tests
-4. Run the narrowest useful check first
-5. Expand only if there is a real uncovered risk
+1. For UI/CSS/frontend changes, inspect the repo's existing component/style patterns first so the implementation stays aligned with the established visual system instead of introducing one-off styling.
+2. Identify the behavior or invariant
+3. Choose the lightest useful test level
+4. Add one or two focused tests
+5. Run the narrowest useful check first
+6. Expand only if there is a real uncovered risk
 
 ## Bias
 
