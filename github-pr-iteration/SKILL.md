@@ -9,6 +9,8 @@ description: Handle GitHub PR workflows using the gh CLI for both new PR creatio
 
 Use this skill to reliably run both PR creation and follow-up iteration without branch/PR churn. Keep changes focused, test-backed, and easy to review.
 
+For solution design and implementation quality, pair this with the `coding-principles` skill.
+
 ## Workflow
 
 1. Check PR state first: verify whether there is an existing **open** PR for this work (`gh pr view` / `gh pr list`). Do not assume a branch is still tied to an active PR just because it existed before.
