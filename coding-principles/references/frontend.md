@@ -1,11 +1,6 @@
----
-name: frontend-coding
-description: Implement and refine frontend/UI code for React, Next.js, component libraries, styling systems, and interaction polish. Use when building or iterating on UI components, layouts, styling, accessibility-facing interaction behavior, visual polish, responsive behavior, or design-system alignment. Especially use when touching CSS, Tailwind, component props/classes, icons, spacing, typography, or other presentational code where matching existing patterns matters.
----
+# Frontend implementation guidance
 
-# Frontend Coding
-
-Implement frontend changes in a way that fits the product's existing visual and interaction system.
+Use this reference when a coding task changes frontend/UI code.
 
 ## Core rule
 
@@ -52,12 +47,3 @@ Prefer extending those patterns over inventing new local ones.
 - Restyling a component without checking sibling patterns
 - Large UI rewrites when a small consistency fix solves the problem
 - Breaking keyboard/focus behavior while polishing visuals
-
-## Output contract
-
-Return concise bullets:
-- Problem
-- Existing pattern matched
-- What changed
-- Checks run
-- Remaining risk
