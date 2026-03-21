@@ -27,9 +27,10 @@ For solution design and implementation quality, pair this with the `coding-princ
 8. Commit with a plain human message and push.
 9. If this is a new PR, make sure the PR title starts with the issue/ticket number when one exists (for example, `[123] Fix dropdown focus trap`). Then run `gh pr create` and verify the returned PR URL/number.
 10. If this is an existing PR, keep the title aligned with that issue/ticket-number convention when applicable, and verify updates landed on the active PR (`gh pr view` / checks).
-11. If new commits changed scope/behavior, update the PR description so it reflects the latest state before/after pushing.
-12. Reply on addressed review comments with minimal wording (`fixed` / `done`).
-13. Summarize what changed, what was tested, and any remaining risk.
+11. For UI/CSS/frontend changes, inspect the repo's existing component/style patterns first and match the established visual system before introducing new styling or icon treatments.
+12. If new commits changed scope/behavior, update the PR description so it reflects the latest state before/after pushing.
+13. Reply on addressed review comments with minimal wording (`fixed` / `done`).
+14. Summarize what changed, what was tested, and any remaining risk.
 
 ## Command Patterns
 
