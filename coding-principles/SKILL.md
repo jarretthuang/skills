@@ -18,6 +18,10 @@ Use this skill as the shared engineering operating system before writing code.
 7. Validate with targeted checks first, then broader checks as needed.
 8. Summarize residual risk and explicit follow-ups.
 
+## Frontend specialization
+
+For frontend/UI work, also read `references/frontend.md` before implementing so changes match the repo's established visual and interaction patterns.
+
 ## Decision Gate: Fast Path vs Design Path
 
 Use fast path for small, localized bugs or low-risk improvements.
