@@ -16,9 +16,10 @@ For solution design and implementation quality, pair this with the `coding-princ
 1. Identify whether this is **new PR creation** or **existing PR iteration**.
 2. If this is iteration work, identify the target PR explicitly before checking state. Prefer a PR number or PR URL when available. Use head branch and issue linkage only as fallback hints to find the right PR, not as equally reliable selectors. Do not rely on bare `gh pr view` / `gh pr list` to discover the target from whatever branch happens to be checked out. After the target branch or PR context is verified, bare `gh pr view` is fine.
 3. Check issue state too: for GitHub iteration work, prefer working from a GitHub issue unless the user, repo workflow, or task context makes that unnecessary (for example, "quick fix, don't need an issue number", issues are disabled, or the team uses PR-only/external-ticket workflows). If an active issue does not exist and creating one fits the repo workflow, create one with a reasonable summary and a concise bullet-list description.
-4. HARD RULE: before creating a PR for issue-driven work, explicitly check whether an open PR already exists for that issue. Check by PR number/URL when known, and otherwise verify via issue timeline cross-references plus open PR title/body/head-branch search. Treat `[<issue-number>] ...` PR titles as the primary title-linkage convention, with body references to the issue as a secondary signal. Do not rely on `#<issue-number>` search alone. If an open PR already exists for the issue, do not create another PR; continue on the existing PR/branch instead.
-5. Pull latest remote changes first (`git fetch`, `git pull --rebase` when needed).
-6. Collect context:
+4. HARD RULE: before creating a PR for issue-driven work, explicitly check whether an open PR already exists for that issue. Check by PR number/URL when known, and otherwise verify via issue timeline cross-references plus open PR title/body/head-branch search. Treat `[<issue-number>] ...` PR titles as the primary title-linkage convention, with body references to the issue as a secondary signal. Do not rely on `#<issue-number>` search alone.
+5. If that check finds an open PR for the issue, stop the new-PR path immediately and continue on the existing PR/branch instead. Do not proceed to `gh pr create`.
+6. Pull latest remote changes first (`git fetch`, `git pull --rebase` when needed).
+7. Collect context:
    - new PR: summarize scope and prepare description
    - existing PR: collect latest review comments and CI failures
 7. Critically validate comments before changing code (especially bot/AI comments).
