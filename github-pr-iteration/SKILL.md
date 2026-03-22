@@ -39,6 +39,8 @@ For solution design and implementation quality, pair this with the `coding-princ
  gh pr view <pr-number|url|branch> --repo <owner/repo> --json number,url,state
  gh pr view --repo <owner/repo> --json number,url,state                              # okay after the target branch/PR context is already verified
  gh pr list --repo <owner/repo> --head <branch> --state open --json number,url,state   # fallback when PR number/URL is not available and branch context is unambiguous
+ gh pr list --repo <owner/repo> --state open --search "#<issue-number>" --json number,url,state,title,headRefName
+ gh api repos/<owner>/<repo>/issues/<issue-number>/timeline --paginate
  gh pr checks <pr-number> --repo <owner/repo>
  gh run list --repo <owner/repo> --branch <branch> --limit 10
  gh run view <run-id> --repo <owner/repo> --log-failed
@@ -85,5 +87,8 @@ For solution design and implementation quality, pair this with the `coding-princ
 - Before pushing follow-up commits or sending a PR link to the user, re-check that the PR is still open and is the correct review target.
 - Create a new PR only when the task is explicitly new PR work (not follow-up on an active PR).
 - Do not commit planning/design markdown files unless explicitly requested.
+- Prefer minimal diffs that directly resolve comments or failures.
+- Always report what was run locally before pushing.
+ot commit planning/design markdown files unless explicitly requested.
 - Prefer minimal diffs that directly resolve comments or failures.
 - Always report what was run locally before pushing.
