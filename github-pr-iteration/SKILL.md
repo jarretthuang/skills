@@ -16,20 +16,21 @@ For solution design and implementation quality, pair this with the `coding-princ
 1. Identify whether this is **new PR creation** or **existing PR iteration**.
 2. If this is iteration work, identify the target PR explicitly before checking state. Prefer a PR number or PR URL when available. Use head branch and issue linkage only as fallback hints to find the right PR, not as equally reliable selectors. Do not rely on bare `gh pr view` / `gh pr list` to discover the target from whatever branch happens to be checked out. After the target branch or PR context is verified, bare `gh pr view` is fine.
 3. Check issue state too: for GitHub iteration work, prefer working from a GitHub issue unless the user, repo workflow, or task context makes that unnecessary (for example, "quick fix, don't need an issue number", issues are disabled, or the team uses PR-only/external-ticket workflows). If an active issue does not exist and creating one fits the repo workflow, create one with a reasonable summary and a concise bullet-list description.
-4. Pull latest remote changes first (`git fetch`, `git pull --rebase` when needed).
-5. Collect context:
+4. HARD RULE: before creating a PR for issue-driven work, explicitly check whether an open PR already exists for that issue. Check by PR number/URL when known, and otherwise verify via issue timeline cross-references plus open PR title/body/head-branch search. Treat `[<issue-number>] ...` PR titles as the primary title-linkage convention, with body references to the issue as a secondary signal. Do not rely on `#<issue-number>` search alone. If an open PR already exists for the issue, do not create another PR; continue on the existing PR/branch instead.
+5. Pull latest remote changes first (`git fetch`, `git pull --rebase` when needed).
+6. Collect context:
    - new PR: summarize scope and prepare description
    - existing PR: collect latest review comments and CI failures
-4. Critically validate comments before changing code (especially bot/AI comments).
-5. Implement only applicable fixes on the same branch.
-6. Add or update lean tests for changed behavior.
-7. Run targeted checks locally first, then broader checks as needed.
-8. Commit with a plain human message and push.
-9. If this is a new PR, make sure the PR title starts with the issue/ticket number when one exists (for example, `[123] Fix dropdown focus trap`). Then run `gh pr create` and verify the returned PR URL/number.
-10. If this is an existing PR, keep the title aligned with that issue/ticket-number convention when applicable, and verify updates landed on the active PR (`gh pr view` / checks).
-11. If new commits changed scope/behavior, update the PR description so it reflects the latest state before/after pushing.
-12. Reply on addressed review comments with minimal wording (`fixed` / `done`).
-13. Summarize what changed, what was tested, and any remaining risk.
+7. Critically validate comments before changing code (especially bot/AI comments).
+8. Implement only applicable fixes on the same branch.
+9. Add or update lean tests for changed behavior.
+10. Run targeted checks locally first, then broader checks as needed.
+11. Commit with a plain human message and push.
+12. If this is a new PR, make sure the PR title starts with the issue/ticket number when one exists (for example, `[123] Fix dropdown focus trap`). Then run `gh pr create` and verify the returned PR URL/number.
+13. If this is an existing PR, keep the title aligned with that issue/ticket-number convention when applicable, and verify updates landed on the active PR (`gh pr view` / checks).
+14. If new commits changed scope/behavior, update the PR description so it reflects the latest state before/after pushing.
+15. Reply on addressed review comments with minimal wording (`fixed` / `done`).
+16. Summarize what changed, what was tested, and any remaining risk.
 
 ## Command Patterns
 
@@ -39,11 +40,12 @@ For solution design and implementation quality, pair this with the `coding-princ
  gh pr view <pr-number|url|branch> --repo <owner/repo> --json number,url,state
  gh pr view --repo <owner/repo> --json number,url,state                              # okay after the target branch/PR context is already verified
  gh pr list --repo <owner/repo> --head <branch> --state open --json number,url,state   # fallback when PR number/URL is not available and branch context is unambiguous
- gh pr list --repo <owner/repo> --state open --search "#<issue-number>" --json number,url,state,title,headRefName
+ gh pr list --repo <owner/repo> --state open --search "[<issue-number>]" --json number,url,state,title,headRefName
+ gh pr list --repo <owner/repo> --state open --search "#<issue-number>" --json number,url,state,title,headRefName   # secondary/fallback when bodies reference the issue
  gh api repos/<owner>/<repo>/issues/<issue-number>/timeline --paginate
  gh pr checks <pr-number> --repo <owner/repo>
- gh run list --repo <owner/repo> --branch <branch> --limit 10
- gh run view <run-id> --repo <owner/repo> --log-failed
+ gh run list --repo <owner>/<repo> --branch <branch> --limit 10
+ gh run view <run-id> --repo <owner>/<repo> --log-failed
 
 # Review comments
  gh api repos/<owner>/<repo>/pulls/<pr-number>/comments --paginate
@@ -80,6 +82,7 @@ For solution design and implementation quality, pair this with the `coding-princ
 
 - For GitHub iteration work, prefer having an active issue number tied to the work when it fits the repo workflow.
 - If an active issue does not exist yet, create one with a concise summary and bullet-list description only when that matches the repo's workflow and the user has not explicitly waived it.
+- Before creating a new PR for issue-driven work, explicitly verify that no open PR already exists for that issue. Prefer `[ISSUE_NUMBER] Title` PR titles as the primary linkage convention, use body references and issue timeline cross-references as secondary checks, and do not rely on `#<issue-number>` search alone. Existing open PR wins; do not create duplicates.
 - For existing PR iteration, stay on the same branch and same PR only while that PR is still open.
 - PR base default: target the repository’s active default base branch (e.g., `main`, `master`, or equivalent) when creating PRs; do not target another feature/fix branch unless the user explicitly requests stacked PRs.
 - Keep PR descriptions up-to-date during iteration (especially after new commits that alter scope, behavior, tests, or risk).
@@ -87,8 +90,5 @@ For solution design and implementation quality, pair this with the `coding-princ
 - Before pushing follow-up commits or sending a PR link to the user, re-check that the PR is still open and is the correct review target.
 - Create a new PR only when the task is explicitly new PR work (not follow-up on an active PR).
 - Do not commit planning/design markdown files unless explicitly requested.
-- Prefer minimal diffs that directly resolve comments or failures.
-- Always report what was run locally before pushing.
-ot commit planning/design markdown files unless explicitly requested.
 - Prefer minimal diffs that directly resolve comments or failures.
 - Always report what was run locally before pushing.
